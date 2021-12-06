@@ -9,7 +9,7 @@ import ru.geekbrains.models.ButtonUiModel
 import ru.geekbrains.mvp.MainPresenter
 import ru.geekbrains.mvp.MainView
 
-class MainActivity : MvpAppCompatActivity(R.layout.activity_main), MainView {
+class MainActivity : MvpAppCompatActivity(), MainView {
 
     private lateinit var viewBinding: ActivityMainBinding
     private val presenter by moxyPresenter {
