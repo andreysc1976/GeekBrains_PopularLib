@@ -1,6 +1,7 @@
 package ru.geekbrains.mvpusers
 
 import moxy.MvpView
+import moxy.viewstate.strategy.alias.AddToEnd
 import moxy.viewstate.strategy.alias.SingleState
 import ru.geekbrains.data.GitHubUser
 

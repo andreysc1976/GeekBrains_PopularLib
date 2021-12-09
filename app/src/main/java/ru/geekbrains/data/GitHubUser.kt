@@ -1,3 +1,4 @@
 package ru.geekbrains.data
 
-data class GitHubUser(val login: String)
+
+data class GitHubUser(val login: String, val id: String)

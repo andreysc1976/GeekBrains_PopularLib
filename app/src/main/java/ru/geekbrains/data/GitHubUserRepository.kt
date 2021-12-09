@@ -1,9 +1,13 @@
 package ru.geekbrains.data
 
+import io.reactivex.rxjava3.core.Observable
+
 interface GitHubUserRepository {
 
-    fun getUsers(): List<GitHubUser>
+    fun getUsers(): Observable<List<GitHubUser>>
 
-    fun getUserByLogin(userId: String): GitHubUser?
+    fun getUserById(userId: String): Observable<GitHubUser>
+
+    fun getIds(): Observable<String>
 
 }
