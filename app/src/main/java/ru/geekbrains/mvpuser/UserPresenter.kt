@@ -10,7 +10,11 @@ class UserPresenter(
     private val router: CustomRouter
 ) : MvpPresenter<UserView>() {
 
+
     override fun onFirstViewAttach() {
-        //пока ничего не делаем
+        userRepository.getUserById(userLogin)
+            .subscribe {
+                viewState.showUser(it)
+        }
     }
 }

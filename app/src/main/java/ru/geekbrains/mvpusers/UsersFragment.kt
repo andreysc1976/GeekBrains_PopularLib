@@ -29,14 +29,20 @@ class UsersFragment: MvpAppCompatFragment(R.layout.view_users), UsersView, Users
         super.onViewCreated(view, savedInstanceState)
         viewBinging = ViewUsersBinding.bind(view)
         viewBinging.usersRecycler.adapter = usersAdapter
+        viewBinging.swipeToRefresh.setOnRefreshListener {
+            presenter.updateContent()
+            viewBinging.swipeToRefresh.isRefreshing = false
+        }
     }
 
     override fun showUsers(users: List<GitHubUser>) {
         usersAdapter.submitList(users)
+        viewBinging.swipeToRefresh.isRefreshing = false
     }
 
-    override fun onUserPicked(user: GitHubUser) =
-        presenter.displayUser(user)
+    override fun onUserPicked(user: GitHubUser) {
+        presenter.goToNextScreen(user.login)
+    }
 
     companion object {
         fun newInstance(): Fragment = UsersFragment()

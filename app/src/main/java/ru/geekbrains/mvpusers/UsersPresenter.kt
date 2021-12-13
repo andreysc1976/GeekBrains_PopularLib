@@ -1,5 +1,9 @@
 package ru.geekbrains.mvpusers
 
+import android.util.Log
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 import moxy.MvpPresenter
 import ru.geekbrains.data.GitHubUser
 import ru.geekbrains.data.GitHubUserRepository
@@ -11,19 +15,32 @@ class UsersPresenter(
     private val router: CustomRouter
 ): MvpPresenter<UsersView>() {
 
+    private val subject = BehaviorSubject.create<Unit>()
+
     override fun onFirstViewAttach() {
-
-        userRepository.getIds()
-            .flatMap { userRepository.getUserById(it) }
-            .subscribe(
-                { result -> viewState.showUsers(listOf(result)) },
-                {}
-            )
-
+       observeChanges()
+       updateContent()
     }
 
-    fun displayUser(user: GitHubUser) =
-        router.navigateTo(UserScreen(user.login))
+    fun goToNextScreen(login: String){
+        router.navigateTo(UserScreen(login))
+    }
 
+    fun updateContent(){
+        subject.onNext(Unit)
+    }
 
+    private fun observeChanges(){
+        subject
+            .flatMap { userRepository.getIds() }
+            .flatMap { userRepository.getUserById(it) }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                viewState.showUsers(listOf(it))
+            },{
+                val errorMessage = it.message
+                //TODO: DisplayMessage
+            })
+    }
 }
