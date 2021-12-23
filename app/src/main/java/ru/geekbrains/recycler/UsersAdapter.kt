@@ -14,7 +14,6 @@ class UsersAdapter(private val onUserClickListener: OnUserClickListener?): ListA
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val itemBinding = ViewUserBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-
         return UserViewHolder(itemBinding)
     }
 

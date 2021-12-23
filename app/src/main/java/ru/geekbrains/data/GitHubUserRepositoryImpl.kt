@@ -1,9 +1,13 @@
 package ru.geekbrains.data
 
+import io.reactivex.rxjava3.core.Single
+
 class GitHubUserRepositoryImpl : GitHubUserRepository {
 
+    private val gitHubApi = GitHubApiFactory.create()
+
     private val users = listOf(
-        GitHubUser("login1"),
+        GitHubUser("andreysc1976"),
         GitHubUser("login2"),
         GitHubUser("login3"),
         GitHubUser("login4"),
@@ -13,6 +17,10 @@ class GitHubUserRepositoryImpl : GitHubUserRepository {
     override fun getUsers() =
         users
 
-    override fun getUserByLogin(userId: String): GitHubUser? =
-        users.firstOrNull { user -> user.login == userId }
+
+
+    override fun getUserByLogin(userId: String): Single<GitHubUser>
+    {
+        return  gitHubApi.fetchUserByLogin(userId)
+    }
 }
