@@ -6,7 +6,7 @@ import ru.geekbrains.App
 object RoomFactory {
 
     private val database: DBStorage by lazy {
-        Room.databaseBuilder(App.ContextHolder.context, DBStorage::class.java, "github.db")
+        Room.databaseBuilder(App.instance, DBStorage::class.java, "github.db")
             .build()
     }
 
