@@ -1,19 +1,20 @@
 package ru.geekbrains.mvpusers
 
 import android.widget.Toast
+import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import moxy.MvpPresenter
-import ru.geekbrains.App.ContextHolder.context
+import ru.geekbrains.App
 import ru.geekbrains.data.GitHubUser
 import ru.geekbrains.data.GitHubUserRepository
 import ru.geekbrains.mvpuser.UserScreen
-import ru.geekbrains.navigation.CustomRouter
+import javax.inject.Inject
 
-class UsersPresenter(
-    private val userRepository: GitHubUserRepository,
-    private val router: CustomRouter
-): MvpPresenter<UsersView>() {
+class UsersPresenter(): MvpPresenter<UsersView>() {
+
+    @Inject lateinit var router: Router
+    @Inject lateinit var userRepository:GitHubUserRepository
 
     override fun onFirstViewAttach() {
         updateData()
@@ -31,7 +32,7 @@ class UsersPresenter(
                 viewState.showUsers(it)
             },{
                 val errorMessage = it.message
-                Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+                Toast.makeText(App.instance, errorMessage, Toast.LENGTH_SHORT).show()
             })
     }
 

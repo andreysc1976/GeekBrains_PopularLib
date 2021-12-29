@@ -1,23 +1,26 @@
 package ru.geekbrains.data
 
 import io.reactivex.rxjava3.core.Single
-import ru.geekbrains.data.rest.GitHubApiFactory
-import ru.geekbrains.data.room.RoomFactory
+import ru.geekbrains.data.rest.GitHubApi
+import ru.geekbrains.data.room.DBStorage
+import javax.inject.Inject
 
-class GitHubUserRepositoryImpl : GitHubUserRepository {
+class GitHubUserRepositoryImpl
+@Inject constructor(
+    private val gitHubApi: GitHubApi,
+    private val roomDb: DBStorage
+) : GitHubUserRepository {
 
-    private val gitHubApi = GitHubApiFactory.create()
-    private val roomDb = RoomFactory.create().getGitHubUserDao()
 
 
     override fun getUsers():Single<List<GitHubUser>>
     {
-        return roomDb.getUsers()
+        return roomDb.getGitHubUserDao().getUsers()
             .flatMap { users ->
                 if (users.isEmpty()) {
                     gitHubApi.fetchUsers()
                         .map { apiRez ->
-                            roomDb.saveUser(apiRez)
+                            roomDb.getGitHubUserDao().saveUser(apiRez)
                             apiRez
                         }
                 } else {
@@ -30,6 +33,6 @@ class GitHubUserRepositoryImpl : GitHubUserRepository {
 
     override fun getUserByLogin(userId: String): Single<GitHubUser>
     {
-        return  roomDb.getUserByLogin(userId)
+        return  roomDb.getGitHubUserDao().getUserByLogin(userId)
     }
 }
