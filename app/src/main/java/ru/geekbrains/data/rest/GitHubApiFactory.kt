@@ -1,4 +1,4 @@
-package ru.geekbrains.data
+package ru.geekbrains.data.rest
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
