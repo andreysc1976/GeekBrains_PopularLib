@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.github.terrakok.cicerone.Router
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
+import ru.geekbrains.App
 import ru.geekbrains.R
 import ru.geekbrains.data.GitHubUser
 import ru.geekbrains.databinding.ViewUserBinding
@@ -24,7 +25,10 @@ class UserFragment: MvpAppCompatFragment(R.layout.view_user), UserView {
     private val presenter: UserPresenter by moxyPresenter {
         UserPresenter(
             userLogin = userLogin
-        )
+
+        ).apply {
+            App.instance.component.provideUserComponent().build().inject(this)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

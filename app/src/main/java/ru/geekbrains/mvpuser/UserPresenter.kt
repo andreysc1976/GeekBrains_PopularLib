@@ -7,6 +7,7 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject
 import moxy.MvpPresenter
 import ru.geekbrains.App
 import ru.geekbrains.data.GitHubUserRepository
+import ru.geekbrains.mvpuser.base.GitHubRepoRepository
 import ru.geekbrains.navigation.CustomRouter
 import javax.inject.Inject
 
@@ -15,6 +16,8 @@ class UserPresenter(
 ) : MvpPresenter<UserView>() {
 
     @Inject lateinit var userRepository:GitHubUserRepository
+
+    @Inject lateinit var userRepoRepository: GitHubRepoRepository
 
     override fun onFirstViewAttach() {
         App.instance.component.inject(this)

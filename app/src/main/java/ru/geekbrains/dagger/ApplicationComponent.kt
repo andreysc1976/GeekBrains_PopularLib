@@ -5,6 +5,7 @@ import dagger.BindsInstance
 import dagger.Component
 import ru.geekbrains.MainActivity
 import ru.geekbrains.mvpuser.UserPresenter
+import ru.geekbrains.mvpuser.di_comp.FragmentComponent
 import ru.geekbrains.mvpusers.UsersPresenter
 import javax.inject.Singleton
 
@@ -18,6 +19,9 @@ import javax.inject.Singleton
 )
 
 interface ApplicationComponent {
+
+    fun provideUserComponent(): FragmentComponent.Builder
+
     @Component.Builder
     interface Builder{
         @BindsInstance
