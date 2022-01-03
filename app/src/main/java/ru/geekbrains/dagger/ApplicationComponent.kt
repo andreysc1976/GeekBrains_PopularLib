@@ -20,7 +20,7 @@ import javax.inject.Singleton
 
 interface ApplicationComponent {
 
-    fun provideUserComponent(): FragmentComponent.Builder
+    fun provideFragmentComponent(): FragmentComponent.Builder
 
     @Component.Builder
     interface Builder{
@@ -31,5 +31,4 @@ interface ApplicationComponent {
 
     fun inject(activity: MainActivity)
     fun inject(activity: UsersPresenter)
-    fun inject(activity: UserPresenter)
 }

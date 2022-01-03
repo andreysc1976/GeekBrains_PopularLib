@@ -8,7 +8,9 @@ import javax.inject.Scope
 @Subcomponent(
     modules = [FragmentModule::class]
 )
+
 interface FragmentComponent {
+
     @Subcomponent.Builder
     interface Builder{
         fun build():FragmentComponent

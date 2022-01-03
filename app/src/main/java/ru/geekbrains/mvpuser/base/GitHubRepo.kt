@@ -10,5 +10,5 @@ data class GitHubRepo(
     val node_id:String,
     val name:String,
     val full_name:String,
-    val description:String
+    val description:String?
 )

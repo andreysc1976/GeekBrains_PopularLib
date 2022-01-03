@@ -14,5 +14,16 @@ class GitHubRepoRepositoryImpl
 
     override fun getUserRepo(login: String): Single<List<GitHubRepo>> {
         return  roomRepoDb.getGitHubRepoDao().getReposByUser(login)
+            .flatMap { repos->
+                if (repos.isEmpty()){
+                    gitHubRepoApi.fetchUserByLogin(login)
+                        .map {apiRez->
+                            roomRepoDb.getGitHubRepoDao().saveRepo(apiRez)
+                            apiRez
+                        }
+                } else {
+                    Single.just(repos)
+                }
+            }
     }
 }
